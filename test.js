@@ -1,29 +1,119 @@
 const needFilter = {
-  fullName: { surname: true, firstName: true, middleName: false }
+  // fullName: { surname: true, firstName: true, middleName: false }
+  fullName: {
+    surname: true,
+    firstName: true,
+    middleName: false,
+    boom: { xxx: { yyy: true } }
+  }
 }
 const locationArray = {
   'fullName.surname': 'Прізвище',
   'fullName.middleName': 'По-батькові'
 }
 
+// const obj = [
+//   { fullName: { surname: 'xxx', firstName: 'yyy', middleName: 'zzz' } },
+//   { fullName: { surname: 'XXX', firstName: 'YYY', middleName: 'ZZZ' } },
+//   { fullName: { surname: 'Чехов', firstName: 'Антон', middleName: 'zzz' } },
+//   {
+//     fullName: { surname: 'Пушкин', firstName: 'Александр', middleName: 'ZZZ' }
+//   },
+//   { fullName: { surname: 'Лермонтов', firstName: true, middleName: 'ZZZ' } },
+//   { fullName: { surname: 'Гоголь', firstName: false, middleName: 'ZZZ' } }
+// ]
+
+// forInObj(needFilter)
+
 const obj = [
-  { fullName: { surname: 'xxx', firstName: 'yyy', middleName: 'zzz' } },
-  { fullName: { surname: 'XXX', firstName: 'YYY', middleName: 'ZZZ' } },
-  { fullName: { surname: 'Чехов', firstName: 'Антон', middleName: 'zzz' } },
   {
-    fullName: { surname: 'Пушкин', firstName: 'Александр', middleName: 'ZZZ' }
+    fullName: {
+      surname: 'xxx',
+      firstName: 'yyy',
+      middleName: 'zzz',
+      boom: { xxx: { yyy: true } }
+    }
   },
-  { fullName: { surname: 'Лермонтов', firstName: true, middleName: 'ZZZ' } },
-  { fullName: { surname: 'Гоголь', firstName: false, middleName: 'ZZZ' } }
+  {
+    fullName: {
+      surname: 'XXX',
+      firstName: 'YYY',
+      middleName: 'ZZZ',
+      boom: { xxx: { yyy: true } }
+    }
+  },
+  {
+    fullName: {
+      surname: 'Чехов',
+      firstName: 'Антон',
+      middleName: 'zzz',
+      boom: { xxx: { yyy: true } }
+    }
+  },
+  {
+    fullName: {
+      surname: 'Пушкин',
+      firstName: 'Александр',
+      middleName: 'ZZZ',
+      boom: { xxx: { yyy: true } }
+    }
+  },
+  {
+    fullName: {
+      surname: 'Лермонтов',
+      firstName: true,
+      middleName: 'ZZZ',
+      boom: { xxx: { yyy: true } }
+    }
+  },
+  {
+    fullName: {
+      surname: 'Гоголь',
+      firstName: false,
+      middleName: 'ZZZ',
+      boom: { xxx: { yyy: true } }
+    }
+  }
 ]
+
+function forInObj (obj) {
+  if (typeof obj !== 'object') {
+    return obj
+  } else {
+    for (k in obj) {
+      return forInObj(obj[k])
+    }
+  }
+}
+
+function typeValue (g) {
+  if (typeof g !== 'object') {
+    let typeValue = typeof g
+    // count++
+    if (typeValue === 'string') {
+      return g
+    }
+    if (typeValue === 'boolean') {
+      return g ? 'Так' : 'Ні'
+    }
+  } else {
+    for (l in g) {
+      return typeValue(g[l])
+    }
+  }
+}
 
 const result = []
 
 for (k in needFilter) {
   let innerObject = needFilter[k] // перебор объкта needFilter
   for (i in innerObject) {
+    let value = innerObject[i]
     //  перебор внутренего обьекта fullName
-    if (innerObject[i]) {
+    if (typeof value === 'object') {
+      value = forInObj(value)
+    }
+    if (value) {
       // если значение true  то ищем данные
       let testObj = {}
       let count = 0
@@ -39,17 +129,11 @@ for (k in needFilter) {
           for (c in s) {
             // перебор второго уровня
             if (c === i) {
-              let typeValue = typeof s[c]
               count++
-              testObj[`value${count}`] = s[c]
-              if (typeValue === 'boolean') {
-                s[c]
-                  ? (testObj[`value${count}`] = 'Так')
-                  : (testObj[`value${count}`] = 'Ні')
-              }
-              if (typeValue === 'object') {
-                console.log('вывожу дату')
-              }
+              testObj[`value${count}`] = typeValue(s[c])
+              // if (typeValue === 'object') {
+              //   testObj[`value${count}`] = typeValue(s[c])
+              // }
             }
           }
         }
@@ -59,3 +143,28 @@ for (k in needFilter) {
   }
 }
 console.log(result)
+
+// function forInObj (object, patch) {
+//   for (k in object) {
+//     patch += `.${k}`
+//     typeof object[k] !== 'object'
+//       ? console.log(`${patch}:${object[k]}`)
+//       : forInObj(object[k], patch)
+//   }
+// }
+
+// function fn (o) {
+//   for (key in o) {
+//     const obj = o[key]
+//     for (k in obj) {
+//       let patch = `${key}.${k}`
+//       if (typeof obj[k] === 'object') {
+//         forInObj(obj[k], patch)
+//       } else {
+//         console.log(`${patch}: ${obj[k]}`)
+//       }
+//     }
+//   }
+// }
+
+// fn(needFilter)
