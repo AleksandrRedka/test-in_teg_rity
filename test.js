@@ -9,7 +9,8 @@ const needFilter = {
 }
 const locationArray = {
   'fullName.surname': 'Прізвище',
-  'fullName.middleName': 'По-батькові'
+  'fullName.middleName': 'По-батькові',
+  'fullName.boom': 'Yooo'
 }
 
 // const obj = [
@@ -63,7 +64,7 @@ const obj = [
       surname: 'Лермонтов',
       firstName: true,
       middleName: 'ZZZ',
-      boom: { xxx: { yyy: true } }
+      boom: { xxx: { yyy: false } }
     }
   },
   {
@@ -80,8 +81,8 @@ function forInObj (obj) {
   if (typeof obj !== 'object') {
     return obj
   } else {
-    for (k in obj) {
-      return forInObj(obj[k])
+    for (p in obj) {
+      return forInObj(obj[p])
     }
   }
 }
@@ -117,6 +118,7 @@ for (k in needFilter) {
       // если значение true  то ищем данные
       let testObj = {}
       let count = 0
+      console.log(`${`${k}.${i}`}`)
       locationArray[`${k}.${i}`]
         ? (testObj.name = locationArray[`${k}.${i}`]) // присваемаем значание  c  объекта location
         : (testObj.name = i) // присваем значение ключа в случае отсуцтвия значения в объекте location
