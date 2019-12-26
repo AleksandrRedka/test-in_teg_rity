@@ -4,7 +4,7 @@ const needFilter = {
     surname: true,
     firstName: true,
     middleName: false,
-    boom: { xxx: { yyy: true } }
+    boom: { xxx: { yyy: false } }
   }
 }
 const locationArray = {
@@ -118,7 +118,6 @@ for (k in needFilter) {
       // если значение true  то ищем данные
       let testObj = {}
       let count = 0
-      console.log(`${`${k}.${i}`}`)
       locationArray[`${k}.${i}`]
         ? (testObj.name = locationArray[`${k}.${i}`]) // присваемаем значание  c  объекта location
         : (testObj.name = i) // присваем значение ключа в случае отсуцтвия значения в объекте location
