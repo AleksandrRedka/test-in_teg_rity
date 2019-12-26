@@ -7,6 +7,8 @@ const locationArray = {
 }
 
 const obj = [
+  { fullName: { surname: 'xxx', firstName: 'yyy', middleName: 'zzz' } },
+  { fullName: { surname: 'XXX', firstName: 'YYY', middleName: 'ZZZ' } },
   { fullName: { surname: 'Чехов', firstName: 'Антон', middleName: 'zzz' } },
   {
     fullName: { surname: 'Пушкин', firstName: 'Александр', middleName: 'ZZZ' }
